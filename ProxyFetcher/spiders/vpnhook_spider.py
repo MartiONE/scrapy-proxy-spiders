@@ -1,10 +1,7 @@
 import scrapy
-import requests
-import time
-import logging
-
 from ProxyFetcher.items import ProxyfetcherItem
 
+# Spider for the forum of the website vpnhook.com
 
 class VpnhookProxySpider(scrapy.Spider):
     name = "vpnhook"

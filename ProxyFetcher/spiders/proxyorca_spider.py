@@ -1,5 +1,4 @@
 import scrapy
-
 from ProxyFetcher.items import ProxyfetcherItem
 
 # Spider for the forum of the website proxyorca.com

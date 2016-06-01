@@ -12,8 +12,7 @@ import logging
 
 
 class ProxyfetcherItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
+    # Build of the item
     ip = scrapy.Field()
     port = scrapy.Field()
     country = scrapy.Field()
