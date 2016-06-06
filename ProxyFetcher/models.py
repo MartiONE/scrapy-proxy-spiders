@@ -1,12 +1,12 @@
 from sqlalchemy import create_engine, Column, Integer, String, Float
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.engine.url import URL
-import ProxyFetcher.settings as settings
+import ProxyFetcher.settings
 
 DeclarativeBase = declarative_base()
 
 def db_connect():
-    return create_engine(URL(**settings.DATABASE))
+    return create_engine(URL(**ProxyFetcher.settings.DATABASE))
 
 def create_table(engine):
     DeclarativeBase.metadata.create_all(engine)
