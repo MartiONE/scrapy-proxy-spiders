@@ -29,7 +29,7 @@ class ProxyfetcherItem(scrapy.Item):
                                  timeout = 5)
             # Only store the item if the judge makes a correct answer
             if judge.status_code == 200:
-                item["response_time"] = time.time() - timestamp
+                item["response_time"] = round(time.time() - timestamp, 3)
                 return item
         # Exception handling
         except requests.exceptions.Timeout as e:

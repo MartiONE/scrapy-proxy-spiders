@@ -14,6 +14,10 @@ BOT_NAME = 'ProxyFetcher'
 SPIDER_MODULES = ['ProxyFetcher.spiders']
 NEWSPIDER_MODULE = 'ProxyFetcher.spiders'
 
+DATABASE = {"YOUR POSTGRESS DB CONFIG"}
+
+
+
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'ProxyFetcher (+http://www.yourdomain.com)'
@@ -67,6 +71,7 @@ ROBOTSTXT_OBEY = True
 #ITEM_PIPELINES = {
 #    'ProxyFetcher.pipelines.SomePipeline': 300,
 #}
+ITEM_PIPELINES = {'ProxyFetcher.pipelines.ProxyfetcherHerokuPipeline': 300,}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See http://doc.scrapy.org/en/latest/topics/autothrottle.html
