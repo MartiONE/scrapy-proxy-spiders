@@ -7,6 +7,19 @@ We use a simple judge to filter them.
 
 - [Scrapy](http://scrapy.org/)
 - [Requests](http://docs.python-requests.org/en/master/)
+- [SQLAlchemy](http://www.sqlalchemy.org/)
+
+
+# Configuration
+
+You'll need to configure the settings.py file using this template
+
+    DATABASE = {'drivername': 'postgres',
+              'host': 'Host',
+              'port': '5432',
+              'username': 'Your database username',
+              'password': 'Password',
+              'database': 'Database selected'}
 
 # Basic Usage
 
