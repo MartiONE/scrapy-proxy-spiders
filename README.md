@@ -22,6 +22,7 @@ You'll need to configure the settings.py file using this template
               'database': 'Database selected'}
               
 Also, if you want to run the job periodically, you can set up crontab to work with virtualenv.
+WITH THE VIRTUALENV ACTIVATED
 
     $ echo "PATH=$PATH" > myserver.cron
     $ crontab -l >> myserver.cron
