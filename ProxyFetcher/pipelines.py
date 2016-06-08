@@ -23,7 +23,8 @@ class ProxyfetcherHerokuPipeline(object):
         proxy = Proxies(**item)
         
         try:
-            session.add(proxy)
+            # Not using add as sometimes will be duplicate key
+            session.merge(proxy)
             session.commit()
         except:
             session.rollback()
