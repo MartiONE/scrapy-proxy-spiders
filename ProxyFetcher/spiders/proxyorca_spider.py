@@ -25,5 +25,6 @@ class ProxyOrcaSpider(scrapy.Spider):
             item["port"] = proxy[1]
             item["con_type"] = "http"
             item["country"] = "NaN"
+            item["full_address"] = "{}:{}".format(item["ip"], item["port"])
             
             yield item.status_check(item)

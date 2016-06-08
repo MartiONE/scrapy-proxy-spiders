@@ -26,5 +26,6 @@ class VpnhookProxySpider(scrapy.Spider):
                 item["port"] = proxy_info.xpath("td/text()")[1].extract().strip()
                 item["country"] = proxy_info.xpath("td/text()")[2].extract().strip()
                 item["con_type"] = proxy_info.xpath("td/text()")[3].extract().strip()
+                item["full_address"] = "{}:{}".format(item["ip"], item["port"])
                 
                 yield item.status_check(item)
