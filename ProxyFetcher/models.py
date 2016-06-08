@@ -13,7 +13,7 @@ def create_table(engine):
     
 class Proxies(DeclarativeBase):
     __tablename__ = "proxies"
-    id = Column("full_address",String, primary_key=True)
+    full_address = Column("full_address",String, primary_key=True)
     ip = Column("ip", String)
     port = Column("port", Integer)
     country = Column("country", String)

@@ -18,6 +18,7 @@ class ProxyfetcherItem(scrapy.Item):
     country = scrapy.Field()
     con_type = scrapy.Field()
     response_time = scrapy.Field()
+    full_address = scrapy.Field()
     
     def status_check(self, item):
         # Save timestamp for later calculation of elapsed time
