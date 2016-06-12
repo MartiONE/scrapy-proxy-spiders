@@ -8,7 +8,7 @@ class HideMyAssProxySpider(scrapy.Spider):
         name = "hidemyass"
         allowed_domains = ["proxylist.hidemyass.com"]
         start_urls = [
-            "http://proxylist.hidemyass.com/search-1304566#listable"
+            "http://proxylist.hidemyass.com/search-1304566"
         ]    
         
 def parse(self, response):
@@ -24,8 +24,10 @@ def parse(self, response):
                 for i in response.xpath("//tbody/tr")[0].xpath("td")[1].xpath("span/*|span/text()")[2:]:
                         if (("class" in i.extract()) & (style[0] not in i.extract())) | ("display: inline" in i.extract()) | ("<" not in i.extract()):
                                 result += i.xpath("text()").extract()[0] if i.xpath("text()").extract() else i.extract().strip()
-                print(result)                
-                yield result
+                print(result) 
+                item = ProxyfetcherItem()
+                item["ip"] = result
+                yield item
 
                 
                
