@@ -1,9 +1,10 @@
 import scrapy
 from ProxyFetcher.items import ProxyfetcherItem
+from scrapy.contrib.spiders import CrawlSpider, Rule
 
 # Spider for the forum of the website hidemyass.com
 
-class HideMyAssProxySpider(scrapy.Spider):
+class HideMyAssProxySpider(CrawlSpider):
     
         name = "hidemyass"
         allowed_domains = ["proxylist.hidemyass.com"]
