@@ -46,19 +46,24 @@ r = redis.StrictRedis(host="redis-16451.c3.eu-west-1-1.ec2.cloud.redislabs.com",
 
 # Iteration for the query results
 for proxy in session.query(Proxies).filter(Proxies.ip != None).all():
-    try:
-        judge = requests.get("http://judge.live-proxy.net/index.php", 
-                             proxies = {str(proxy.con_type) : proxy.full_address}, 
-                             timeout = 3)
-        # Only store the item if the judge makes a correct answer
-        if judge.status_code == 200:
-            r.setex(proxy.full_address, 120, proxy.con_type)
-    # Exception handling
-    except Exception as e:
-        # Deletion from the database
+    # Socks 4 and 5 not supported for now
+    if proxy.con_type in ["http", "https"]:
         try:
-            session.delete(proxy)
-            session.commit()
-            print("Bad proxy, deleted "+proxy.full_address)
-        except sqlalchemy.orm.exc.ObjectDeletedError as e:
-            print("Duplicated key")
+            judge = requests.get("http://judge.live-proxy.net/index.php", 
+                                 proxies = {"http" : proxy.full_address}, 
+                                 timeout = 3)
+            # Only store the item if the judge makes a correct answer
+            if judge.status_code == 200:
+                r.setex(proxy.full_address, 120, proxy.con_type)
+        # Exception handling
+        except Exception as e:
+            # Deletion from the database
+            try:
+                session.delete(proxy)
+                session.commit()
+                print("Bad proxy, deleted "+proxy.full_address)
+            except sqlalchemy.orm.exc.ObjectDeletedError as e:
+                print("Duplicated key")
+    else:
+        session.delete(proxy)
+        session.commit()        
