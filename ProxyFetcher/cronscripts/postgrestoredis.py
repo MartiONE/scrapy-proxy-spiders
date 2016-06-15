@@ -65,5 +65,6 @@ for proxy in session.query(Proxies).filter(Proxies.ip != None).all():
             except sqlalchemy.orm.exc.ObjectDeletedError as e:
                 print("Duplicated key")
     else:
+        print("Not http/https, deleted"+proxy.con_type)
         session.delete(proxy)
         session.commit()        
