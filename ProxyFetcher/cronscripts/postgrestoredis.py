@@ -42,5 +42,6 @@ for proxy in session.query(Proxies).filter(Proxies.ip != None).all():
             r.setex(proxy.full_address, 120, proxy.con_type)
     # Exception handling
     except Exception as e:
-        print("Bad proxy"+proxy.full_address)
-    
+        session.delete(proxy)
+        session.commit()
+        print("Bad proxy, deleted "+proxy.full_address)
