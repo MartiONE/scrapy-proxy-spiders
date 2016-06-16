@@ -26,8 +26,8 @@ class ProxyfetcherItem(scrapy.Item):
         # Call the judge for the proxy
         try:
             judge = requests.get("http://judge.live-proxy.net/index.php", 
-                                 proxies = {str(item["con_type"]) : "{}:{}".format(item["ip"], item["port"])}, 
-                                 timeout = 5)
+                                 proxies = {"http" : "http://{}:{}".format(item["ip"], item["port"])}, 
+                                 timeout = 5)          
             # Only store the item if the judge makes a correct answer
             if judge.status_code == 200:
                 item["response_time"] = round(time.time() - timestamp, 3)
