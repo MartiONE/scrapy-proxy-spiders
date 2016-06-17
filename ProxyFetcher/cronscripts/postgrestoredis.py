@@ -47,7 +47,7 @@ Session = sessionmaker(bind=engine)
 session = Session()
 
 # Redis session opener
-r = redis.StrictRedis(host="redis-16451.c3.eu-west-1-1.ec2.cloud.redislabs.com", port=16451, password="javicp90")
+r = redis.StrictRedis(host=cfg['postgres']['host'], port=int(cfg['postgres']['port']), password=cfg['postgres']['password'])
 
 # Iteration for the query results
 for proxy in session.query(Proxies).filter(Proxies.ip != None).all():
