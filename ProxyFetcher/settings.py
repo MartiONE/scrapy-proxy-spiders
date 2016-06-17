@@ -1,4 +1,4 @@
-import configparser, os
+import configparser
 # -*- coding: utf-8 -*-
 
 # Scrapy settings for ProxyFetcher project
@@ -18,14 +18,12 @@ NEWSPIDER_MODULE = 'ProxyFetcher.spiders'
 
 cfg = configparser.ConfigParser()
 cfg.read("general.cfg")
-print(os.getcwd())
-print(cfg.sections())
 DATABASE = {'drivername': 'postgres', 
-'host': cfg["postgres"]["host"], 
-'port': cfg["postgres"]["port"], 
-'username': cfg["postgres"]["username"], 
-'password': cfg["postgres"]["password"], 
-'database': cfg["postgres"]["database"]}
+            'host': cfg["postgres"]["host"], 
+            'port': cfg["postgres"]["port"], 
+            'username': cfg["postgres"]["username"], 
+            'password': cfg["postgres"]["password"], 
+            'database': cfg["postgres"]["database"]}
 
 
 

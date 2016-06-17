@@ -6,6 +6,11 @@ from sqlalchemy import create_engine, Column, Integer, String, Float
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.engine.url import URL
+import configparser
+
+cfg = configparser.ConfigParser()
+cfg.read("general.cfg")
+print(cfg.sections)
 
 '''
 To-do list:
