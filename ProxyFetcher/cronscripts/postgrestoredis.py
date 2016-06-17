@@ -8,9 +8,9 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.engine.url import URL
 import configparser
 
+# Config parser
 cfg = configparser.ConfigParser()
 cfg.read("general.cfg")
-print(cfg.sections)
 
 '''
 To-do list:
@@ -23,12 +23,12 @@ To-do list:
 DeclarativeBase = declarative_base()
 
 # Settings for the postgres database
-settings = {'drivername': 'postgres',
- 'host': 'ec2-54-247-185-241.eu-west-1.compute.amazonaws.com',
- 'port': '5432',
- 'username': 'zsgfhmwkoflfsd',
- 'password': 'kd3sPn7Sgj5ZhScCH2dbdPhCDC',
- 'database': 'ddj0spavnrluds'}
+settings = {'drivername': cfg['postgres']['drivername'],
+ 'host': cfg['postgres']['host'],
+ 'port': cfg['postgres']['port'],
+ 'username': cfg['postgres']['username'],
+ 'password': cfg['postgres']['password'],
+ 'database': cfg['postgres']['database']}
 
 
 class Proxies(DeclarativeBase):
