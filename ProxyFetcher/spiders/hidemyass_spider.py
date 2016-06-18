@@ -36,7 +36,7 @@ class HideMyAssProxySpider(scrapy.Spider):
                         item["ip"] = result
                         item["port"] = j.xpath("td[3]/text()").extract()[0].strip()
                         item["country"] = j.xpath("td[4]/span/text()").extract()[1].strip()
-                        item["con_type"] = j.xpath("td[7]/text()").extract()[0].strip()
+                        item["con_type"] = j.xpath("td[7]/text()").extract()[0].strip().lower()
                         item["full_address"] = "{}:{}".format(item["ip"], item["port"])
                         yield item.status_check(item)
                         #print(result if re.match("([0-9]{1,3}\.){3}[0-9]{1,3}", result) else [result, j.extract(), style])
