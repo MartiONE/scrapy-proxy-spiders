@@ -12,15 +12,26 @@ We use a simple judge to filter them.
 
 # Configuration
 
-You'll need to configure the settings.py file using this template
+You'll need to configure the general.cfg file using this template:
 
-    DATABASE = {'drivername': 'postgres',
-              'host': 'Host',
-              'port': '5432',
-              'username': 'Your database username',
-              'password': 'Password',
-              'database': 'Database selected'}
+Postgres database where we will store the results.
+
+    [postgres]
+    drivername = postgres 
+    host = >Postgres host<
+    port = >5432 by default<
+    username = >Postgres username<
+    password = >Postgres passwd<
+    database = >Postgres database name
               
+Optionally we can also configure a redis database that will deliver the fresh proxies to our app:
+    
+    [remote_redis]
+    host = >Redis host<
+    port = >Redis port<
+    password = >Redis passwd<
+    
+    
 Also, if you want to run the job periodically, you can set up crontab to work with virtualenv.
 WITH THE VIRTUALENV ACTIVATED
 
@@ -34,9 +45,9 @@ Crontab file will now look like:
     
 Then add the jobs like:
     
-    1 * * * * sh ~/Your-project-folder/cronscripts/vpnhook.sh >>/tmp/cron_debug_log.log 2>&1
+    1 * * * * sh ~/Your-project-folder/cronscripts/execute_spider.sh vpnhook >>/tmp/cron_debug_log.log 2>&1
     
-Please note that the trailing addition is for log and debug purposes
+Please note that the trailing addition is for log and debug purposes, and the execute spider is a generic script.
 
 # Basic Usage
 
