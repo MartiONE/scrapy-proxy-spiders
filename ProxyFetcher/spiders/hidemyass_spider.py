@@ -14,24 +14,24 @@ class HideMyAssProxySpider(scrapy.Spider):
         
         def parse(self, response):
                 for j in response.xpath("//tbody/tr"):
-                        #self.logger.info(str(j))
                         # Getting the styles
-                        style = j.xpath("td")[1].xpath("span/style/text()").extract()[0].rsplit()
-                        # Filter the ones that have the display property
+                        style = j.xpath("td[2]/span/style/text()").extract()[0].rsplit()
+                        # Filter the ones that haven't the display property
                         style = [re.match("\.([^\{]+){display:none}", x) for x in style]
-                        # Refine the array
+                        # Refine the array, removing the None produced
                         style = [x.group(1) for x in style if x]
                         
                         result = ""
-                        for i in j.xpath("td")[1].xpath("span/*|span/text()")[2:]:
-                                
+                        for i in j.xpath("td[2]/span/*|span/text()")[2:]:
+                                # First chech for the style 'display: inline' and the abscense of any
                                 if ("display: inline" in i.extract()) | ("<" not in i.extract()):
                                         result += i.xpath("text()").extract()[0] if i.xpath("text()").extract() else i.extract().strip()
+                                # Check for the class, as sometimes there are classes not listed and must be included
                                 elif "class" in i.extract():
                                         if i.xpath("@class").extract()[0] not in style:
-                                                #print(i)
                                                 result += i.xpath("text()").extract()[0]
-                        self.logger.info(result) 
+                                                
+                        # Item initializer
                         item = ProxyfetcherItem()
                         item["ip"] = result
                         item["port"] = j.xpath("td[3]/text()").extract()[0].strip()
@@ -39,7 +39,6 @@ class HideMyAssProxySpider(scrapy.Spider):
                         item["con_type"] = j.xpath("td[7]/text()").extract()[0].strip().lower()
                         item["full_address"] = "{}:{}".format(item["ip"], item["port"])
                         yield item.status_check(item)
-                        #print(result if re.match("([0-9]{1,3}\.){3}[0-9]{1,3}", result) else [result, j.extract(), style])
 
                 
                
