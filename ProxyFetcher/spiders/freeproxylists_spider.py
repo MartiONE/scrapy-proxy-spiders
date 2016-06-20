@@ -1,17 +1,31 @@
 import scrapy
 from ProxyFetcher.items import ProxyfetcherItem
+import redis
 import re
+import configparser
+
+# Config parser
+cfg = configparser.ConfigParser()
+cfg.read("general.cfg")
 
 
 class FreeProxyListsSpider(scrapy.Spider):
         '''Spider for the forum of the website reeproxylists.net'''
+        
         
         name = "freeproxylists"
         allowed_domains = ["freeproxylists.net"]
         start_urls = [
                 # With a 50% + uptime filtered
             "http://www.freeproxylists.net/?c=&pt=&pr=&a%5B%5D=0&a%5B%5D=1&a%5B%5D=2&u=50"
-        ]    
+        ]
+        def make_requests_from_url(self, url):
+                req = Request(url=url)
+                r = redis.StrictRedis(host=cfg["remote_redis"]["host"], 
+                                      port=cfg["remote_redis"]["port"], 
+                                      password=cfg["remote_redis"]["password"])
+                req.meta['proxy'] = "http://"+r.randomkey().decode("utf-8")
+                return req
         
         def parse(self, response):
                 for row in response.xpath("//table[@class='DataGrid']/tr")[1:]:
