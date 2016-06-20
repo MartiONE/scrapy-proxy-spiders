@@ -1,3 +1,3 @@
 #! /bin/bash
 cd ~/scrapy-proxy-spiders/scrapy-proxy-spiders
-scrapy crawl proxyorca
+scrapy crawl $1
