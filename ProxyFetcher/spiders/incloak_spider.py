@@ -10,6 +10,10 @@ class InCloakSpider(scrapy.Spider):
         ]    
         
         def parse(self, response):
+                for page in response.xpath("//div[@class='proxy__pagination']/ul/li[not(@class) or @class='is-active']/a/@href"):
+                        url = response.urljoin(page.extract())
+                        yield scrapy.Request(url, callback=self.parse_page)
+        def parse_page(self, response):
                 for row in response.xpath("//table[@class='proxy__t']/tbody/tr"):
                         item = ProxyfetcherItem()
                         item["ip"] = row.xpath("td[1]/text()").extract()[0].strip()
