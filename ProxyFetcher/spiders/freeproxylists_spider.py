@@ -28,7 +28,7 @@ class FreeProxyListsSpider(scrapy.Spider):
                 #print(response.text)
                 for row in response.xpath("//table[@class='DataGrid']/tr")[1:]:
                         #print(len(row.xpath("td")))
-                        if len(row.xpath("td")):
+                        if len(row.xpath("td")) > 1:
                         	item = ProxyfetcherItem()
                         	# This website uses JavaScript for encryption of the IP with UTF-16
                         	# Extract payload for the function
