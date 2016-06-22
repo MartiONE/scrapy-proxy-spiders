@@ -21,20 +21,24 @@ class FreeProxyListsSpider(scrapy.Spider):
                                       port=cfg["remote_redis"]["port"], 
                                       password=cfg["remote_redis"]["password"])
                 req.meta['proxy'] = "http://"+r.randomkey().decode("utf-8")
+                req.cookies['userno'] = "20160621-000278"
                 yield req
                 
         def parse(self, response):
+                #print(response.text)
                 for row in response.xpath("//table[@class='DataGrid']/tr")[1:]:
-                        item = ProxyfetcherItem()
-                        # This website uses JavaScript for encryption of the IP with UTF-16
-                        # Extract payload for the function
-                        payload = row.xpath("td/script/text()")[0].re('"(.*)"')[0]
-                        # Convert it from UTF-16
-                        payload = "".join([chr(int(x, 16)) for x in payload.split("%")[1:]])
-                        # Extract the IP clean, nice try website.
-                        item["ip"] = re.search("(([0-9]{1,3}\.){3}[0-9]{1,3})", payload).group(0)
-                        item["port"] = row.xpath("td[2]/text()").extract()[0].strip()
-                        item["con_type"] = row.xpath("td[3]/text()").extract()[0].lower().strip()
-                        item["country"] = row.xpath("td[5]/text()").extract()[0].strip()
-                        item["full_address"] = "{}:{}".format(item["ip"], item["port"])
-                        yield item.status_check(item)
+                        #print(len(row.xpath("td")))
+                        if len(row.xpath("td")):
+                        	item = ProxyfetcherItem()
+                        	# This website uses JavaScript for encryption of the IP with UTF-16
+                        	# Extract payload for the function
+                        	payload = row.xpath("td/script/text()")[0].re('"(.*)"')[0]
+                        	# Convert it from UTF-16
+                        	payload = "".join([chr(int(x, 16)) for x in payload.split("%")[1:]])
+                        	# Extract the IP clean, nice try website.
+                        	item["ip"] = re.search("(([0-9]{1,3}\.){3}[0-9]{1,3})", payload).group(0)
+                        	item["port"] = row.xpath("td[2]/text()").extract()[0].strip()
+                        	item["con_type"] = row.xpath("td[3]/text()").extract()[0].lower().strip()
+                        	item["country"] = row.xpath("td[5]/text()").extract()[0].strip()
+                        	item["full_address"] = "{}:{}".format(item["ip"], item["port"])
+                        	yield item.status_check(item)
