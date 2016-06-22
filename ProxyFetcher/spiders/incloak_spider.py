@@ -4,13 +4,14 @@ from ProxyFetcher.items import ProxyfetcherItem
 class InCloakSpider(scrapy.Spider):
     
         name = "incloak"
-        allowed_domains = ["http://incloak.com/"]
+        allowed_domains = ["incloak.com"]
         start_urls = [
             "http://incloak.com/proxy-list/?maxtime=1000&type=hs#list"
         ]    
         
         def parse(self, response):
                 for page in response.xpath("//div[@class='proxy__pagination']/ul/li[not(@class) or @class='is-active']/a/@href"):
+                        print(page)
                         url = response.urljoin(page.extract())
                         yield scrapy.Request(url, callback=self.parse_page)
         def parse_page(self, response):
