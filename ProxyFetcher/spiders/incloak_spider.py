@@ -23,6 +23,6 @@ class InCloakSpider(scrapy.Spider):
                         item["port"] = row.xpath("td[2]/text()").extract()[0].strip()
                         item["country"] = row.xpath("td[3]/div/text()").extract()[0].strip()
                         # Split for the dual mode, getting only http
-                        item["con_type"] = row.xpath("td[5]/text()").extract()[0].split(", ")[0]
+                        item["con_type"] = row.xpath("td[5]/text()").extract()[0].split(", ")[0].lower()
                         item["full_address"] = "{}:{}".format(item["ip"], item["port"])
                         yield item.status_check(item)
