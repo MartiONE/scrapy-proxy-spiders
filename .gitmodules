@@ -1,3 +1,3 @@
 [submodule "sensitive-files"]
 	path = sensitive-files
-	url = /home/martione/scrapy-proxy-spiders/scrapy-proxy-spiders/sensitive-files/
+	url = git@git.example.com:me/app-base.git
