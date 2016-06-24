@@ -1,0 +1,3 @@
+[submodule "sensitive-files"]
+	path = sensitive-files
+	url = /home/martione/scrapy-proxy-spiders/scrapy-proxy-spiders/sensitive-files/
