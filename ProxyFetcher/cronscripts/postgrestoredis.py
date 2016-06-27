@@ -6,6 +6,7 @@ from sqlalchemy import create_engine, Column, Integer, String, Float
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.engine.url import URL
+from sqlalchemy.orm.exc import ObjectDeletedError
 import configparser
 
 # Config parser
@@ -74,5 +75,5 @@ for proxy in session.query(Proxies).filter(Proxies.ip != None).all():
             print("Not http/https, deleted"+proxy.con_type)
             session.delete(proxy)
             session.commit()
-    except Exception as e:
-        print("Exception most likely object error" + e)
+    except ObjectDeletedError as e:
+        print("Object deleted error")
