@@ -17,8 +17,8 @@ class HideMyAssProxySpider(scrapy.Spider):
                         # Getting the styles, filtering and displaying
                         style = j.xpath("td[2]/span/style/text()").re("\.([^\{]+){display:none}")
                         result = ""
-                        for i in j.xpath("td[2]/span/*|span/text()")[2:]:
-                                # First chech for the style 'display: inline' and the abscense of any
+                        for i in j.xpath("td[2]/span").xpath("div|span|text()")[1:-1]:
+                                # First chech for the style 'display: inline' and the lack of any
                                 if ("display: inline" in i.extract()) | ("<" not in i.extract()):
                                         result += i.xpath("text()").extract()[0] if i.xpath("text()").extract() else i.extract().strip()
                                 # Check for the class, as sometimes there are classes not listed and must be included
