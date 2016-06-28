@@ -4,7 +4,7 @@ import base64
 
 class ProxyListSpider(scrapy.Spider):
     
-        name = "proxy-list"
+        name = "proxylist"
         allowed_domains = ["proxy-list.org"]
         start_urls = [
             "http://incloak.com/proxy-list/?maxtime=1000&type=hs#list"
