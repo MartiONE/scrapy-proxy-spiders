@@ -17,14 +17,14 @@ class HideMyAssProxySpider(scrapy.Spider):
                         # Getting the styles, filtering and displaying
                         style = j.xpath("td[2]/span/style/text()").re("\.([^\{]+){display:none}")
                         result = ""
-                        for i in j.xpath("td[2]/span").xpath("div|span|text()")[1:-1]:
+                        for i in j.xpath("td[2]/span").xpath("div|span|text()")[1:]:
                                 # First chech for the style 'display: inline' and the lack of any
                                 if ("display: inline" in i.extract()) | ("<" not in i.extract()):
                                         result += i.xpath("text()").extract()[0] if i.xpath("text()").extract() else i.extract().strip()
                                 # Check for the class, as sometimes there are classes not listed and must be included
                                 elif "class" in i.extract():
                                         if i.xpath("@class").extract()[0] not in style:
-                                                result += i.xpath("text()").extract()[0]
+                                                result += i.xpath("text()").extract()[0].strip()
                                                 
                         # Item initializer
                         item = ProxyfetcherItem()
