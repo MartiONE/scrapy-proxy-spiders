@@ -11,6 +11,13 @@ class ProxyListSpider(scrapy.Spider):
         ]    
         
         def parse(self, response):
+                # Parse the footer page list
+                for page in response.xpath("//div[@class='table-menu']/a[@class='item']/@href"):
+                        # Relative url, need to.
+                        url = response.urljoin(page.extract())
+                        yield scrapy.Request(url, callback=self.parse_page)
+        
+        def parse_page(self, response):
                 for j in response.xpath("//div[@class='table']/ul"):
                         # Item creation and deployment
                         item = ProxyfetcherItem()
