@@ -7,7 +7,7 @@ class ProxyListSpider(scrapy.Spider):
         name = "proxylist"
         allowed_domains = ["proxy-list.org"]
         start_urls = [
-            "http://incloak.com/proxy-list/?maxtime=1000&type=hs#list"
+            "https://proxy-list.org/english/index.php"
         ]    
         
         def parse(self, response):
