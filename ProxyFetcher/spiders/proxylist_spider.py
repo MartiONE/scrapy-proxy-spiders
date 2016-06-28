@@ -16,6 +16,7 @@ class ProxyListSpider(scrapy.Spider):
                         # Relative url, need to.
                         url = response.urljoin(page.extract())
                         yield scrapy.Request(url, callback=self.parse_page)
+                yield parse_page(self, response)
         
         def parse_page(self, response):
                 for j in response.xpath("//div[@class='table']/ul"):
