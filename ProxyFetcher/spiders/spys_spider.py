@@ -5,9 +5,12 @@ class Spyspider(scrapy.Spider):
     
         name = "spys"
         allowed_domains = ["http://spys.ru/"]
-        start_urls = [
-            "http://spys.ru/en/free-proxy-list/"
-        ]
+        
+        def start_requests(self):
+                return [ FormRequest("http://spys.ru/en/free-proxy-list/",
+                             formdata={'xpp': '3', 'xf1': '0', 'xf2' : '0'},
+                             callback=self.parse) ]
+        
         # Helper function to process the abstaction
         def process_operands(self, op, dictionary):
                 if type(op) != int:
