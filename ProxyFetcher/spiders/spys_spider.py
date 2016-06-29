@@ -1,5 +1,6 @@
 import scrapy
 from ProxyFetcher.items import ProxyfetcherItem
+from scrapy.http import FormRequest
 
 class Spyspider(scrapy.Spider):
     
