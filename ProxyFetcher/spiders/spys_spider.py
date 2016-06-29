@@ -9,7 +9,7 @@ class Spyspider(scrapy.Spider):
             "http://spys.ru/en/free-proxy-list/"
         ]
         # Helper function to process the abstaction
-        def process_operands(self, op):
+        def process_operands(self, op, dictionary):
                 if type(op) != int:
                         op = op.split("^")
                         return int(op[0])^dictionary[op[1]]
@@ -24,13 +24,14 @@ class Spyspider(scrapy.Spider):
                                            for x in response.xpath("//body/script/text()").extract()[0].split(";") if x]}
                 # Some of the values are backlinked to dictionary values, so we solve it.
                 # We cannot do it in one iteration because we really need other dictionary values.
-                dictionary = {x:self.process_operands(y) for x,y in dictionary.items()}
+                dictionary = {x:self.process_operands(y, dictionary) for x,y in dictionary.items()}
                         
-                for j in response.xpath("//body/table[2]/tr[4]/td/table/tr")[2:]:
+                for j in response.xpath("//body/table[2]/tr[4]/td/table/tr")[3:-1]:
                         
                         # Item creation and deployment
                         item = ProxyfetcherItem()
-                        item["ip"] = j.xpath("td/font[@class='spy14']/text()").extract()[0]
+                        
+                        item["ip"] = j.xpath("td[1]/font[2]/text()").extract()[0]
                         # Extracting the operands of the JS function
                         operands = [x.split("^") for x in j.xpath("td/font[@class='spy14']/script/text()").re("\((\w+\^\w+)\)")]
                         # Combine them all looking at the dictionary to form the port
@@ -38,4 +39,4 @@ class Spyspider(scrapy.Spider):
                         item["country"] = j.xpath("td[4]/a/font/text()").extract()[0].strip()
                         item["con_type"] = j.xpath("td[2]/a/font/text()").extract()[0].strip().lower()
                         item["full_address"] = "{}:{}".format(item["ip"], item["port"])
-                        yield item
+                        yield item.status_check(item)
