@@ -18,15 +18,16 @@ class Spyspider(scrapy.Spider):
                 
         def parse(self, response):
                 # Strong magic, converting the javascript variables into a dictionary
-                        dictionary = {y[0]:
-                                         int(y[1]) if y[1].isdigit() else y[1]
-                                         for y in [x.split("=") 
-                                                   for x in response.xpath("//body/script/text()").extract()[0].split(";") if x]}
-                        # Some of the values are backlinked to dictionary values, so we solve it.
-                        # We cannot do it in one iteration because we really need other dictionary values.
-                        dictionary = {x:self.process_operands(y) for x,y in dictionary.items()}
+                dictionary = {y[0]:
+                                 int(y[1]) if y[1].isdigit() else y[1]
+                                 for y in [x.split("=") 
+                                           for x in response.xpath("//body/script/text()").extract()[0].split(";") if x]}
+                # Some of the values are backlinked to dictionary values, so we solve it.
+                # We cannot do it in one iteration because we really need other dictionary values.
+                dictionary = {x:self.process_operands(y) for x,y in dictionary.items()}
                         
                 for j in response.xpath("//body/table[2]/tr[4]/td/table/tr")[2:]:
+                        
                         # Item creation and deployment
                         item = ProxyfetcherItem()
                         item["ip"] = j.xpath("td/font[@class='spy14']/text()").extract()[0]
