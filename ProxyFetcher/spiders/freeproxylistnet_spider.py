@@ -16,7 +16,7 @@ class FreeProxyListNet(scrapy.Spider):
                         item["ip"] = j.xpath("td[1]/text()").extract()[0].strip()
                         item["port"] = j.xpath("td[2]/text()").extract()[0].strip()
                         item["country"] = j.xpath("td[4]/text()").extract()[0].strip()
-                        item["con_type"] == "http" if j.xpath("td[7]/text()").extract()[0].strip() == "no" else "https"
+                        item["con_type"] = "http" if j.xpath("td[7]/text()").extract()[0].strip() == "no" else "https"
                         item["full_address"] = "{}:{}".format(item["ip"], item["port"])
                         yield item.status_check(item)
                         
