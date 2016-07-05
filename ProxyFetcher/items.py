@@ -29,7 +29,7 @@ class ProxyfetcherItem(scrapy.Item):
                                  proxies = {"http" : "http://{}:{}".format(item["ip"], item["port"])}, 
                                  timeout = 5)          
             # Only store the item if the judge makes a correct answer
-            if judge.status_code == 200:
+            if (judge.status_code == 200) and ("HTTP_HOST" in judge.text):
                 item["response_time"] = round(time.time() - timestamp, 3)
                 return item
         # Exception handling
