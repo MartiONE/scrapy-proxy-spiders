@@ -60,8 +60,16 @@ for proxy in session.query(Proxies).filter(Proxies.ip != None).all():
                                      proxies = {"http" : "http://"+proxy.full_address}, 
                                      timeout = 3)
                 # Only store the item if the judge makes a correct answer
-                if judge.status_code == 200:
+                if (judge.status_code == 200) and ("HTTP_HOST" in judge.text):
                     r.setex(proxy.full_address, 120, proxy.con_type)
+                # Catch the ones that even answering correctly are not what we expect
+                else:
+                    try:
+                        session.delete(proxy)
+                        session.commit()
+                        print("Bad response, deleted "+proxy.full_address)
+                    except sqlalchemy.orm.exc.ObjectDeletedError as e:
+                        print("Duplicated key")                   
             # Exception handling
             except Exception as e:
                 # Deletion from the database
