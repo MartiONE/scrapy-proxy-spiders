@@ -38,4 +38,8 @@ class ProxyfetcherItem(scrapy.Item):
         except requests.exceptions.ProxyError as e:
             logging.info("Proxy error: "+str(e))
         except requests.exceptions.ConnectionError as e:
-            logging.info("Connection Error: "+str(e))        
+            logging.info("Connection Error: "+str(e))
+        except requests.exceptions.ChunkedEncodingError as e:
+            logging.info("Connection probably broken.")
+        except Exception as e:
+            logging.info("Uncaught exception: " +str(e))
