@@ -9,7 +9,7 @@ general.cfg.bak
 __pycache__/
 *.py[cod]
 *$py.class
-
+*.py.save
 # C extensions
 *.so
 

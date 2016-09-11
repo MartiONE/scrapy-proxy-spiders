@@ -21,12 +21,13 @@ class FreeProxyListsSpider(scrapy.Spider):
         allowed_domains = ["freeproxylists.net"]
         
         def start_requests(self):
-                req = scrapy.Request("http://www.freeproxylists.net/?c=&pt=&pr=&a%5B%5D=0&a%5B%5D=1&a%5B%5D=2&u=50", self.parse)
+                headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36', 'Accept-Language': 'en-US,en;q=0.8,es;q=0.6', 'Accept-Encoding': 'gzip, deflate, sdch', 'Connection': 'keep-alive', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8', 'Cache-Control': 'max-age=0', 'Host': 'www.freeproxylists.net', 'Upgrade-Insecure-Requests': '1', 'Cookie': 'visited=2016%2F09%2F11+21%3A12%3A31; hl=en; pv=7; userno=20160911-010067; from=direct'} 
+                req = scrapy.Request("http://www.freeproxylists.net/?c=&pt=&pr=&a%5B%5D=0&a%5B%5D=1&a%5B%5D=2&u=50", self.parse, headers=headers)
                 # Gather a random proxy from our redis server
-                r = redis.StrictRedis(host=cfg["remote_redis"]["host"], 
-                                      port=cfg["remote_redis"]["port"], 
-                                      password=cfg["remote_redis"]["password"])
-                req.meta['proxy'] = "http://"+r.randomkey().decode("utf-8")
+                #r = redis.StrictRedis(host=cfg["remote_redis"]["host"], 
+                #                     port=cfg["remote_redis"]["port"], 
+                #                      password=cfg["remote_redis"]["password"])
+                #req.meta['proxy'] = "http://"+r.randomkey().decode("utf-8")
                 yield req
                 
         def parse(self, response):
