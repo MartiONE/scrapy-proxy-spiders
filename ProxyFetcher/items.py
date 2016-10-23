@@ -18,7 +18,7 @@ cfg.read("general.cfg")
 
 
 class ProxyfetcherItem(scrapy.Item):
-    # Build of the item
+    # Build of the item
     ip = scrapy.Field()
     port = scrapy.Field()
     country = scrapy.Field()

@@ -2,7 +2,7 @@ import scrapy
 import json
 from ProxyFetcher.items import ProxyfetcherItem
 
-class FreeProxyListNet(scrapy.Spider):
+class NordVPNcom(scrapy.Spider):
     
         name = "nordvpn"
         allowed_domains = ["nordvpn.com"]

@@ -1,7 +1,7 @@
 import scrapy
 from ProxyFetcher.items import ProxyfetcherItem
 
-class FreeProxyListNet(scrapy.Spider):
+class SSLproxies(scrapy.Spider):
     
         name = "sslproxies"
         allowed_domains = ["https://www.sslproxies.org/"]
