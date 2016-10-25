@@ -19,13 +19,13 @@ class GatherProxySpider(scrapy.Spider):
         def parse(self, response):
                 # Parse the footer page list
                 for i in response.xpath("//div[@class='pagenavi']/a/text()"):
-                        self.logger.warning(i.extract())
+#                        self.logger.warning(i.extract())
                         yield scrapy.FormRequest(url=response.url,
                                                  formdata={'Uptime': '0', 'Type': 'anonymous', 'PageIdx': i.extract()},
                                                  callback=self.parse_page)
         def parse_page(self, response):
-                from scrapy.shell import inspect_response
-                inspect_response(response, self)
+#                from scrapy.shell import inspect_response
+#                inspect_response(response, self)
                 for row in response.xpath("//table/tr")[2:]:
                         # Item creation and deployment
                         item = ProxyfetcherItem()
