@@ -56,7 +56,7 @@ for proxy in session.query(Proxies).filter(Proxies.ip != None).all():
     try:
         if proxy.con_type in ["http", "https"]:
             try:
-                judge = requests.get(cfg.get('judge', "url", fallback="http://www.bdsmpichunter.com/dde32.php"), 
+                judge = requests.get(cfg.get('judge', "url", fallback="http://azenv.net/"), 
                                      proxies = {"http" : "http://"+proxy.full_address}, 
                                      timeout = 3)
                 # Only store the item if the judge makes a correct answer

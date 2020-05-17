@@ -31,7 +31,7 @@ class ProxyfetcherItem(scrapy.Item):
         timestamp = time.time()
         # Call the judge for the proxy
         try:
-            judge = requests.get(cfg.get('judge', "url", fallback="http://www.bdsmpichunter.com/dde32.php"), 
+            judge = requests.get(cfg.get('judge', "url", fallback="http://azenv.net/"), 
                                  proxies = {"http" : "http://{}:{}".format(item["ip"], item["port"])}, 
                                  timeout = 5)          
             # Only store the item if the judge makes a correct answer

@@ -18,13 +18,15 @@ NEWSPIDER_MODULE = 'ProxyFetcher.spiders'
 
 cfg = configparser.ConfigParser()
 cfg.read("general.cfg")
-DATABASE = {'drivername': 'postgres', 
+try:
+    DATABASE = {'drivername': 'postgres', 
             'host': cfg["postgres"]["host"], 
             'port': cfg["postgres"]["port"], 
             'username': cfg["postgres"]["username"], 
             'password': cfg["postgres"]["password"], 
             'database': cfg["postgres"]["database"]}
-
+except KeyError:
+    pass
 
 
 
